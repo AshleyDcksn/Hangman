@@ -7,11 +7,13 @@
              </div>
              <div class="col-lg-6">
                  <div>
-                     ____ ____ ____ ____ ____ ____
+                    {% for n in range(hm.word_length) %}
+                        <span> _____ </span>
+                    {% endfor %}
                  </div>
                  <form action="{{ url_for('add_char') }}" method=post class=add_char>
                      <div class="form-group">
-                          <label>Enter a letter:{{word}}</label>
+                          <label>Enter a letter:</label>
                           <input type="text" size="1" class="form-control" name="letter">
                      </div>
                      <p><button type="submit" class="btn btn-success">Submit</button></p>

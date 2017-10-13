@@ -3,11 +3,41 @@
      <div class="jumbotron" style="padding-top:0px;">
          <div class="row">
              <div class="col-lg-6">
-                <img src="/static/imgs/HangMan1.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% if hm.number_of_tries == 6 %}
+                    <img src="/static/imgs/HangMan6.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% endif %}
+                 {% if hm.number_of_tries == 5 %}
+                    <img src="/static/imgs/HangMan1.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% endif %}
+                 {% if hm.number_of_tries == 4 %}
+                    <img src="/static/imgs/HangMan2.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% endif %}
+                 {% if hm.number_of_tries == 3 %}
+                    <img src="/static/imgs/HangMan3.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% endif %}
+                 {% if hm.number_of_tries == 2 %}
+                    <img src="/static/imgs/HangMan4.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% endif %}
+                 {% if hm.number_of_tries == 1 %}
+                    <img src="/static/imgs/HangMan5.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% endif %}
+                 {% if hm.number_of_tries == 0 %}
+                    <img src="/static/imgs/HangMan.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                 {% endif %}
              </div>
              <div class="col-lg-6">
                  <div>
-                     ____ ____ ____ ____ ____ ____
+                     <span>{{hm.number_of_tries}} tries left! </span>
+                 </div>
+                 <div>
+                    {% for n in range(hm.word_length) %}
+                        {% if n in hm.index_list %}
+                            <span> {{hm.word[n]}}</span>
+                        {% else %}
+                            <span> _____  </span>
+                        {% endif %}
+                    {% endfor %}
+                     {{indexList}}
                  </div>
                  <form action="{{ url_for('add_char') }}" method=post class=add_char>
                      <div class="form-group">
