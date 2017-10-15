@@ -1,0 +1,18 @@
+{% extends "new_game.html" %}
+{% block body %}
+         <div class="row">
+             <div class="col-lg-6">
+                 <br/><br/>
+                 <h3  class="alert alert-dark" >You Lost!</h3>
+                  <iframe src="https://giphy.com/embed/Gzvo3F4TBUm1W" width="480" height="343" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/stick-figure-Gzvo3F4TBUm1W"></a></p>
+             </div>
+             <div class="col-lg-6">
+                 <br/><br/>
+                 <h3>Ready to Try Again?</h3>
+                 <h5>The word was '{{hm.word}}'</h5>
+                 <form action="{{ url_for('start_new_game') }}" method=get>
+                     <p><button type="submit" class="btn btn-success">New Game</button></p>
+                 </form>
+             </div>
+         </div>
+{% endblock %}

@@ -1,35 +1,35 @@
 {% extends "new_game.html" %}
 {% block body %}
-     <div class="jumbotron" style="padding-top:0px;">
          <div class="row">
-             <div class="col-lg-6">
+             <div class="col-lg-8">
                  {% if hm.number_of_tries == 6 %}
-                    <img src="/static/imgs/HangMan6.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                    <img src="/static/imgs/HangMan6.png" height="10%" width="20%" alt="Banner" class="img-responsive">
                  {% endif %}
                  {% if hm.number_of_tries == 5 %}
-                    <img src="/static/imgs/HangMan1.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                    <img src="/static/imgs/HangMan1.png" height="50%" width="40%" alt="Banner" class="img-responsive">
                  {% endif %}
                  {% if hm.number_of_tries == 4 %}
-                    <img src="/static/imgs/HangMan2.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                    <img src="/static/imgs/HangMan2.png" height="50%" width="40%" alt="Banner" class="img-responsive">
                  {% endif %}
                  {% if hm.number_of_tries == 3 %}
-                    <img src="/static/imgs/HangMan3.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                    <img src="/static/imgs/HangMan3.png" height="50%" width="40%" alt="Banner" class="img-responsive">
                  {% endif %}
                  {% if hm.number_of_tries == 2 %}
-                    <img src="/static/imgs/HangMan4.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                    <img src="/static/imgs/HangMan4.png" height="50%" width="40%" alt="Banner" class="img-responsive">
                  {% endif %}
                  {% if hm.number_of_tries == 1 %}
-                    <img src="/static/imgs/HangMan5.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                    <img src="/static/imgs/HangMan5.png" height="50%" width="40%" alt="Banner" class="img-responsive">
                  {% endif %}
                  {% if hm.number_of_tries == 0 %}
-                    <img src="/static/imgs/HangMan.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+                    <img src="/static/imgs/HangMan.png" height="50%" width="40%" alt="Banner" class="img-responsive">
                  {% endif %}
              </div>
-             <div class="col-lg-6">
-                 <div>
-                     <span>{{hm.number_of_tries}} tries left! </span>
-                 </div>
-                 <div>
+             <div class="col-md-4">
+                 <br/><br/>
+                 {% if hm.number_of_tries != 6 %}
+                        <span class="alert alert-warning" role="alert">{{hm.number_of_tries}} tries left! {{hm.word}} {{hm.word_length}} {{hm.index_list|length}}</span>
+                 {% endif %}
+                 <div style="padding-top:20%">
                     {% for n in range(hm.word_length) %}
                         {% if n in hm.index_list %}
                             <span> {{hm.word[n]}}</span>
@@ -39,10 +39,10 @@
                     {% endfor %}
                      {{indexList}}
                  </div>
-                 <form action="{{ url_for('add_char') }}" method=post class=add_char>
+                 <form class="form-inline" action="{{ url_for('add_char') }}" method=post class=add_char>
+                     <label>Enter a letter:</label>
                      <div class="form-group">
-                          <label>Enter a letter:</label>
-                          <input type="text" size="1" class="form-control" name="letter">
+                          <input tabindex="0" autofocus required type="text" maxlength="1" class="form-control" name="letter">
                      </div>
                      <p><button type="submit" class="btn btn-success">Submit</button></p>
                  </form>
@@ -54,8 +54,7 @@
                             <span class="active-letter">{{key}}</span>
                         {% endif %}
                     {% endfor %}
-                </div>
+                 </div>
              </div>
          </div>
-      </div>
 {% endblock %}

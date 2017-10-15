@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 from flask import render_template
 from flask import request
 from flask.ext.mysql import MySQL
@@ -13,7 +13,7 @@ mysql = MySQL()
 configureDB.configure(app)
 mysql.init_app(app)
 hmGame = None
-
+NUMBER_OF_ROWS = 14
 
 @app.route('/')
 def hello_world():
@@ -21,29 +21,39 @@ def hello_world():
 
 @app.route('/new_game')
 def start_new_game():
-    word_index = random.randint(1,14)
+    word_selector_id = random.randint(1,NUMBER_OF_ROWS)
     conn = mysql.connect()
     cursor = mysql.get_db().cursor()
-    cursor.execute("SELECT word, word_length FROM dev.hang_man_tbl where idhang_man=(%s)",(word_index))
+    cursor.execute("SELECT word, word_length FROM dev.hang_man_tbl where idhang_man=(%s)",(word_selector_id))
     row = list(cursor.fetchone())
     global hmGame
-    hmGame = Hangman.NewHangmanGame(word_index, row[0],row[1])
+    hmGame = Hangman.NewHangmanGame(word_selector_id, row[0],row[1])
     conn.close()
     return render_template('new_game.html', hm=hmGame)
 
-#TODO Add method for user to submit a char
 @app.route('/add_char', methods=['POST'])
 def add_char():
     letter = request.form['letter']
     global hmGame
     hmWord = hmGame.word
     hmGame.alphaDict[letter] = 0
-    letter_indexes = [pos for pos, char in enumerate(hmWord) if char == letter]
-    if len(letter_indexes) == 0:
+    letter_indexes_found = [pos for pos, char in enumerate(hmWord) if char == letter]
+    if len(letter_indexes_found) == 0:
         hmGame.number_of_tries -= 1
+        if hmGame.number_of_tries == 0:
+            return render_template('loser.html',hm=hmGame)
+        else:
+            return render_template('game_1.html', hm=hmGame)
+    elif letter_indexes_found in hmGame.index_list: ##TODO: Case where same letter is entered twice!!
+        return render_template('game1.html', hm=hmGame)
+    elif len(hmGame.index_list) == hmGame.word_length:
+        #user won the game!
+        return render_template('winner.html', hm=hmGame)
     else:
-        hmGame.index_list.extend(letter_indexes)
-    return render_template('game_1.html', hm=hmGame)
+        hmGame.index_list.extend(letter_indexes_found)
+        return render_template('game_1.html', hm=hmGame)
+
+
 
 
 

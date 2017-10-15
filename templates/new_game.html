@@ -1,20 +1,21 @@
 {% extends "hang_man.html" %}
     {% block body %}
-      <div class="jumbotron" style="padding-top:0px;">
          <div class="row">
-             <div class="col-lg-6">
-                <img src="/static/imgs/HangMan6.png" height="90%" width="80%" alt="Banner" class="img-responsive">
+             <div class="col-lg-8">
+                    <img src="/static/imgs/HangMan6.png" height="55%" width="40%" alt="Banner" class="img-responsive">
              </div>
-             <div class="col-lg-6">
+             <div class="col-md-4">
                  <div>
                     {% for n in range(hm.word_length) %}
                         <span> _____ </span>
                     {% endfor %}
                  </div>
                  <form action="{{ url_for('add_char') }}" method=post class=add_char>
+                     <div class="form-inline">
+                     <label>Enter a letter:</label>
                      <div class="form-group">
-                          <label>Enter a letter:</label>
-                          <input tabindex="0" type="text" size="1" class="form-control" name="letter">
+                          <input tabindex="0" autofocus required tabindex="0" type="text" maxlength="1" class="form-control" name="letter">
+                     </div>
                      </div>
                      <p><button type="submit" class="btn btn-success">Submit</button></p>
                  </form>
@@ -27,5 +28,4 @@
                  </div>
              </div>
          </div>
-      </div>
     {% endblock %}
