@@ -37,6 +37,7 @@ def add_char():
     letter = request.form['letter']
     global hmGame
     hmWord = hmGame.word
+    hmGame.alphaDict[letter] = 0
     letter_indexes = [pos for pos, char in enumerate(hmWord) if char == letter]
     if len(letter_indexes) == 0:
         hmGame.number_of_tries -= 1

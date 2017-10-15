@@ -46,6 +46,15 @@
                      </div>
                      <p><button type="submit" class="btn btn-success">Submit</button></p>
                  </form>
+                 <div>
+                    {% for key, value in hm.alphaDict.iteritems() %}
+                        {% if value == 0 %}
+                            <span class="dead-letter">{{key}}</span>
+                        {% else %}
+                            <span class="active-letter">{{key}}</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
              </div>
          </div>
       </div>
